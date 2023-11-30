@@ -1,48 +1,26 @@
-const posts = [
-    {title: 'post1'},
-    {title: 'post2'}
-]
+console.log('person1 : show tickets');
+console.log('person2 : show tickets');
 
-function getPosts(){
-    setTimeout(() =>{
-        let output='';
-        posts.forEach((post, index) =>{
-            output += `<li>${post.title}</li>`;
-        });
-        document.body.innerHTML = output;
-    },1000);
-}
-
-function createPost(post){
-    return new Promise((resolve, reject) =>{
-        setTimeout(() =>{
-            posts.push(post);
-
-            const error = false;
-            if(!error){
-                resolve();
-            }
-            else{
-                reject("Error: Something went wrong");
-            }
-        },2000);
-    })
-}
-
-
-function updateLastUserActivityTime(){
-    return new Promise((resolve, reject) =>{
-        const last = new Date();
-        setTimeout(()=>{
-            console.log('Last Activity time update:', last);
-            resolve(last);
-        },1000);
+const preMovie  = async() => {
+    const promiseWifeBringingTics = new Promise((resolve, reject) => {
+        setTimeout(() => resolve('ticket'), 3000);
     });
+
+    const getPopcorn= new Promise((resolve, reject) => resolve('popcorn'));
+
+    const addButter= new Promise((resolve, reject) => resolve('butter'));
+
+    const getColdDrinks = new Promise((resolve, reject) => resolve('colddrink'));
+
+    let ticket = await promiseWifeBringingTics;
+    
+    let [popcorn, butter, coldDrink] = await Promise.all([getPopcorn, addButter, getColdDrinks])
+
+    console.log(`${popcorn}, ${butter}, ${coldDrink}`);
+    return ticket;
 }
 
-const pro1 = createPost({title:'post3'});
-const pro2 = updateLastUserActivityTime();
+preMovie().then((m) => console.log(`person3: shows ${m}`));
 
-Promise.all([pro1, pro2])
-    .then(() => getPosts())
-    .then(() => console.log("Updated last activity time"));
+console.log('person4 : show tickets');
+console.log('person5 : show tickets');
